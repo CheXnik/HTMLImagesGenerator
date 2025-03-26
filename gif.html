@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>TVOROZHOK 🍆</title>
+  <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+
+<div class="app">
+  <div class="settings-wrapper">
+    <div class="settings">
+      <div class="menu">
+        <div class="title">Canvas</div>
+        <div class="input-wrapper">
+          <div class="form-wrapper ai-center">
+            <div class="form">
+              <span class="input-decoration">w</span>
+              <input type="number" id="canvas-width" class="fix" value="1080" placeholder="1080" onchange="apply_new_params()" title="">
+              <span class="input-decoration">px</span>
+            </div>
+            <span>x</span>
+            <div class="form">
+              <span class="input-decoration">h</span>
+              <input type="number" id="canvas-height" class="fix" value="1920" placeholder="1920" onchange="apply_new_params()" title="">
+              <span class="input-decoration">px</span>
+            </div>
+          </div>
+        </div>
+        <div class="input-wrapper">
+          <div class="form-wrapper ai-center">
+            <div class="form">
+              <span class="input-decoration">w</span>
+              <input type="number" id="canvas-width-ratio" class="fix" value="9" placeholder="9" onchange="apply_new_params()" title="">
+            </div>
+            <svg width="800" height="800" class="icon" id="link" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M14.1625 18.4876L13.4417 19.2084C11.053 21.5971 7.18019 21.5971 4.79151 19.2084C2.40283 16.8198 2.40283 12.9469 4.79151 10.5583L5.51236 9.8374" stroke="#1C274C" stroke-width="2.5" stroke-linecap="round"/>
+              <path d="M9.8374 14.1625L14.1625 9.8374" stroke="#1C274C" stroke-width="2" stroke-linecap="round"/>
+              <path d="M9.8374 5.51236L10.5583 4.79151C12.9469 2.40283 16.8198 2.40283 19.2084 4.79151C21.5971 7.18019 21.5971 11.053 19.2084 13.4417L18.4876 14.1625" stroke="#1C274C" stroke-width="2.5" stroke-linecap="round"/>
+            </svg>
+            <svg width="800px" height="800px" class="icon d-none" id="link-broken" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10 5.04877L10.367 4.70563C12.7995 2.43146 16.7432 2.43146 19.1757 4.70563C21.6081 6.9798 21.6081 10.667 19.1757 12.9411L16.9735 15" stroke="#1C274C" stroke-width="2.5" stroke-linecap="round"/>
+              <path d="M14 18.9278L13.6345 19.2773C11.2123 21.5937 7.25434 21.5644 4.83209 19.248C2.43376 16.9546 2.37639 13.2153 4.74095 10.89L5.64594 10" stroke="#1C274C" stroke-width="2.5" stroke-linecap="round"/>
+              <path d="M6.58739 3L7.5 5.20521" stroke="#1C274C" stroke-width="2" stroke-linecap="round"/>
+              <path d="M3.50238 6.08658L9.05021 8.79453" stroke="#1C274C" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <div class="form">
+              <span class="input-decoration">h</span>
+              <input type="number" id="canvas-height-ratio" class="fix" value="16" placeholder="16" onchange="apply_new_params()" title="">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu">
+        <div class="title">Text</div>
+        <div class="form-wrapper fd-column">
+          <div class="input-wrapper fd-column">
+            <label for="text-on-image">Text on image</label>
+            <div class="form">
+              <input id="text-on-image" value="Template text" placeholder="Text on image" oninput="apply_new_params()">
+            </div>
+          </div>
+          <div class="input-wrapper fd-column">
+            <label for="size-text">Size</label>
+            <div class="form">
+              <input type="number" id="size-text" value="220" placeholder="Size" onchange="apply_new_params()">
+              <span class="input-decoration">px</span>
+            </div>
+          </div>
+          <div class="input-wrapper fd-column">
+            <label for="padding-text">Padding</label>
+            <div class="form">
+              <input type="number" id="padding-text" value="150" placeholder="Padding" onchange="apply_new_params()">
+              <span class="input-decoration">px</span>
+            </div>
+          </div>
+          <div class="input-wrapper fd-column">
+            <label for="padding-text">Color</label>
+            <div class="color-wrapper">
+              <input type="color" id="color-text" value="#ffffff" title="" oninput="change_color(this)">
+              <div class="form">
+                <span class="input-decoration">#</span>
+              <input type="text" id="hex-color-text" value="ffffff" title="" class="fix" placeholder="ffffff" onchange="change_hex_color(this)">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu">
+        <div class="title">Left gradient</div>
+        <div class="input-wrapper fd-column">
+            <label for="padding-text">From</label>
+            <div class="color-wrapper">
+              <input type="color" id="lg-color-from" value="#4e4e4e" title="" oninput="change_color(this)">
+              <div class="form">
+                <span class="input-decoration">#</span>
+              <input type="text" id="hex-lg-color-from" value="4e4e4e" title="" class="fix" placeholder="4e4e4e" onchange="change_hex_color(this)">
+              </div>
+            </div>
+          </div>
+        <div class="input-wrapper fd-column">
+            <label for="padding-text">To</label>
+            <div class="color-wrapper">
+              <input type="color" id="lg-color-to" value="#1f1f1f" title="" oninput="change_color(this)">
+              <div class="form">
+                <span class="input-decoration">#</span>
+              <input type="text" id="hex-lg-color-to" value="1f1f1f" title="" class="fix" placeholder="1f1f1f" onchange="change_hex_color(this)">
+              </div>
+            </div>
+          </div>
+      </div>
+
+      <div class="menu">
+        <div class="title">Right gradient</div>
+        <div class="input-wrapper fd-column">
+            <label for="padding-text">From</label>
+            <div class="color-wrapper">
+              <input type="color" id="rg-color-from" value="#fd30d1" title="" oninput="change_color(this)">
+              <div class="form">
+                <span class="input-decoration">#</span>
+              <input type="text" id="hex-rg-color-from" value="fd30d1" title="" class="fix" placeholder="fd30d1" onchange="change_hex_color(this)">
+              </div>
+            </div>
+          </div>
+        <div class="input-wrapper fd-column">
+            <label for="padding-text">To</label>
+            <div class="color-wrapper">
+              <input type="color" id="rg-color-to" value="#b505f5" title="" oninput="change_color(this)">
+              <div class="form">
+                <span class="input-decoration">#</span>
+              <input type="text" id="hex-rg-color-to" value="b505f5" title="" class="fix" placeholder="b505f5" onchange="change_hex_color(this)">
+              </div>
+            </div>
+          </div>
+      </div>
+
+      <div class="menu">
+        <div class="title">Gradient ratio</div>
+        <div class="input-wrapper fd-column">
+          <div class="form">
+            <span class="input-decoration">w</span>
+            <input type="number" title="" class="fix" id="numeric-gradient-ratio" value="2000" placeholder="" onchange="change_gradient_ratio(this)">
+            <span class="input-decoration">px</span>
+          </div>
+        </div>
+        <div class="input-wrapper fd-column">
+          <input class="slider" id="gradient-ratio" type="range" value="2000" min="0" max="2700" title="" oninput="apply_new_params()">
+        </div>
+      </div>
+
+    </div>
+    <div class="tools">
+      <div class="tool">
+        <img src="static/icon/save.svg" alt="">
+        <div id="save" class="onclick"></div>
+      </div>
+    </div>
+  </div>
+  <div class="main-wrapper">
+    <div class="canvas-wrapper">
+      <canvas id="canvas" class="canvas"></canvas>
+    </div>
+  </div>
+</div>
+
+<script type="application/javascript">
+  const link = document.getElementById('link');
+  const linkBroken = document.getElementById('link-broken');
+
+  link.addEventListener('click', function() {
+    link.classList.add('d-none');
+    linkBroken.classList.remove('d-none');
+  });
+
+  linkBroken.addEventListener('click', function() {
+    linkBroken.classList.add('d-none');
+    link.classList.remove('d-none');
+  });
+</script>
+
+</body>
+</html>

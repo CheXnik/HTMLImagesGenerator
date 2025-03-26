@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>TVOROZHOK 🍆</title>
+  <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+
+<div class="app">
+  <div class="settings-wrapper">
+    <div class="settings">
+      <div class="menu">
+        <div class="title">Canvas</div>
+        <div class="input-wrapper">
+          <div class="form-wrapper ai-center">
+            <div class="form">
+              <span class="input-decoration">w</span>
+              <input type="number" id="canvas-width" class="fix" value="2700" placeholder="2700" onchange="apply_new_params()" title="">
+              <span class="input-decoration">px</span>
+            </div>
+            <span>x</span>
+            <div class="form">
+              <span class="input-decoration">h</span>
+              <input type="number" id="canvas-height" class="fix" value="1200" placeholder="1200" onchange="apply_new_params()" title="">
+              <span class="input-decoration">px</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu">
+        <div class="title">Text</div>
+        <div class="form-wrapper fd-column">
+          <div class="input-wrapper fd-column">
+            <label for="text-on-image">Text on image</label>
+            <div class="form">
+              <input id="text-on-image" value="Template text" placeholder="Text on image" oninput="apply_new_params()">
+            </div>
+          </div>
+          <div class="input-wrapper fd-column">
+            <label for="size-text">Size</label>
+            <div class="form">
+              <input type="number" id="size-text" value="220" placeholder="Size" onchange="apply_new_params()">
+              <span class="input-decoration">px</span>
+            </div>
+          </div>
+          <div class="input-wrapper fd-column">
+            <label for="padding-text">Padding</label>
+            <div class="form">
+              <input type="number" id="padding-text" value="150" placeholder="Padding" onchange="apply_new_params()">
+              <span class="input-decoration">px</span>
+            </div>
+          </div>
+          <div class="input-wrapper fd-column">
+            <label for="padding-text">Color</label>
+            <div class="color-wrapper">
+              <input type="color" id="color-text" value="#ffffff" title="" oninput="change_color(this)">
+              <div class="form">
+                <span class="input-decoration">#</span>
+              <input type="text" id="hex-color-text" value="ffffff" title="" class="fix" placeholder="ffffff" onchange="change_hex_color(this)">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu">
+        <div class="title">Left gradient</div>
+        <div class="input-wrapper fd-column">
+            <label for="padding-text">From</label>
+            <div class="color-wrapper">
+              <input type="color" id="lg-color-from" value="#4e4e4e" title="" oninput="change_color(this)">
+              <div class="form">
+                <span class="input-decoration">#</span>
+              <input type="text" id="hex-lg-color-from" value="4e4e4e" title="" class="fix" placeholder="4e4e4e" onchange="change_hex_color(this)">
+              </div>
+            </div>
+          </div>
+        <div class="input-wrapper fd-column">
+            <label for="padding-text">To</label>
+            <div class="color-wrapper">
+              <input type="color" id="lg-color-to" value="#1f1f1f" title="" oninput="change_color(this)">
+              <div class="form">
+                <span class="input-decoration">#</span>
+              <input type="text" id="hex-lg-color-to" value="1f1f1f" title="" class="fix" placeholder="1f1f1f" onchange="change_hex_color(this)">
+              </div>
+            </div>
+          </div>
+      </div>
+
+      <div class="menu">
+        <div class="title">Right gradient</div>
+        <div class="input-wrapper fd-column">
+            <label for="padding-text">From</label>
+            <div class="color-wrapper">
+              <input type="color" id="rg-color-from" value="#fd30d1" title="" oninput="change_color(this)">
+              <div class="form">
+                <span class="input-decoration">#</span>
+              <input type="text" id="hex-rg-color-from" value="fd30d1" title="" class="fix" placeholder="fd30d1" onchange="change_hex_color(this)">
+              </div>
+            </div>
+          </div>
+        <div class="input-wrapper fd-column">
+            <label for="padding-text">To</label>
+            <div class="color-wrapper">
+              <input type="color" id="rg-color-to" value="#b505f5" title="" oninput="change_color(this)">
+              <div class="form">
+                <span class="input-decoration">#</span>
+              <input type="text" id="hex-rg-color-to" value="b505f5" title="" class="fix" placeholder="b505f5" onchange="change_hex_color(this)">
+              </div>
+            </div>
+          </div>
+      </div>
+
+      <div class="menu">
+        <div class="title">Gradient ratio</div>
+        <div class="input-wrapper fd-column">
+          <div class="form">
+            <span class="input-decoration">w</span>
+            <input type="number" title="" class="fix" id="numeric-gradient-ratio" value="2000" placeholder="" onchange="change_gradient_ratio(this)">
+            <span class="input-decoration">px</span>
+          </div>
+        </div>
+        <div class="input-wrapper fd-column">
+          <input class="slider" id="gradient-ratio" type="range" value="2000" min="0" max="2700" title="" oninput="apply_new_params()">
+        </div>
+      </div>
+
+    </div>
+    <div class="tools">
+      <div class="tool">
+        <img src="static/icon/save.svg" alt="">
+        <div id="save" class="onclick"></div>
+      </div>
+    </div>
+  </div>
+  <div class="main-wrapper">
+    <div class="canvas-wrapper">
+      <canvas id="canvas" class="canvas"></canvas>
+    </div>
+  </div>
+</div>
+
+<script src="static/js/script.js"></script>
+
+</body>
+</html>
