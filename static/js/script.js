@@ -31,7 +31,7 @@ function get_settings() {
 function apply_new_params() {
   get_settings()
 
-  const canvas = document.getElementById('canvas')
+  const canvas = document.getElementById('mainCanvas')
   if (!canvas.getContext) {return}
   const ctx = canvas.getContext('2d');
 
@@ -40,13 +40,10 @@ function apply_new_params() {
 
   canvas.width = data.canvas.real_width
   canvas.height = data.canvas.real_height
-  canvas.style.width = `${data.canvas.width}px`
-  canvas.style.height = `${data.canvas.height}px`
 
   gradient_ratio.max = data.canvas.real_width
 
   const left_gradient = ctx.createLinearGradient(0, 0, data.gradient.width * 0.55, 0)
-  // const left_gradient = ctx.createLinearGradient(data.gradient.width * 0.55, 0, 0, 0)
   left_gradient.addColorStop(0, data.gradient.left.from)
   left_gradient.addColorStop(1, data.gradient.left.to)
 
@@ -110,10 +107,10 @@ let saveBlob = (function () {
 }());
 
 async function save() {
-    let canvas = document.getElementById("canvas")
-    canvas.toBlob((blob) => {
-      saveBlob(blob, `${data.text.text.replace(' ', '_')}.png`);
-    });
-  }
+  let canvas = document.getElementById("mainCanvas")
+  canvas.toBlob((blob) => {
+    saveBlob(blob, `${data.text.text.replace(' ', '_')}.png`);
+  });
+}
 
 apply_new_params()
