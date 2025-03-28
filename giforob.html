@@ -131,22 +131,22 @@
 
     </div>
     <div class="tools">
-      <div id="play" class="button">
+      <button id="play" class="button">
         <span>Play</span>
         <svg class="icon" width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <circle cx="12" cy="12" r="10" stroke="#1C274C" stroke-width="2"/>
           <path d="M15.4137 10.941C16.1954 11.4026 16.1954 12.5974 15.4137 13.059L10.6935 15.8458C9.93371 16.2944 9 15.7105 9 14.7868L9 9.21316C9 8.28947 9.93371 7.70561 10.6935 8.15419L15.4137 10.941Z" stroke="#1C274C" stroke-width="2"/>
         </svg>
-      </div>
-      <div id="stop" class="button d-none">
+      </button>
+      <button id="stop" class="button d-none">
         <span>Stop</span>
         <svg class="icon" width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <circle cx="12" cy="12" r="10" stroke="#1C274C" stroke-width="2"/>
           <path d="M8 9.5C8 9.03406 8 8.80109 8.07612 8.61732C8.17761 8.37229 8.37229 8.17761 8.61732 8.07612C8.80109 8 9.03406 8 9.5 8C9.96594 8 10.1989 8 10.3827 8.07612C10.6277 8.17761 10.8224 8.37229 10.9239 8.61732C11 8.80109 11 9.03406 11 9.5V14.5C11 14.9659 11 15.1989 10.9239 15.3827C10.8224 15.6277 10.6277 15.8224 10.3827 15.9239C10.1989 16 9.96594 16 9.5 16C9.03406 16 8.80109 16 8.61732 15.9239C8.37229 15.8224 8.17761 15.6277 8.07612 15.3827C8 15.1989 8 14.9659 8 14.5V9.5Z" stroke="#1C274C" stroke-width="1.5"/>
           <path d="M13 9.5C13 9.03406 13 8.80109 13.0761 8.61732C13.1776 8.37229 13.3723 8.17761 13.6173 8.07612C13.8011 8 14.0341 8 14.5 8C14.9659 8 15.1989 8 15.3827 8.07612C15.6277 8.17761 15.8224 8.37229 15.9239 8.61732C16 8.80109 16 9.03406 16 9.5V14.5C16 14.9659 16 15.1989 15.9239 15.3827C15.8224 15.6277 15.6277 15.8224 15.3827 15.9239C15.1989 16 14.9659 16 14.5 16C14.0341 16 13.8011 16 13.6173 15.9239C13.3723 15.8224 13.1776 15.6277 13.0761 15.3827C13 15.1989 13 14.9659 13 14.5V9.5Z" stroke="#1C274C" stroke-width="1.5"/>
         </svg>
-      </div>
-      <div id="render" class="button">
+      </button>
+      <button id="render" class="button">
         <span>Render</span>
         <svg class="icon" width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M4 11H16C17.8856 11 18.8284 11 19.4142 11.5858C20 12.1716 20 13.1144 20 15V16C20 18.8284 20 20.2426 19.1213 21.1213C18.2426 22 16.8284 22 14 22H10C7.17157 22 5.75736 22 4.87868 21.1213C4 20.2426 4 18.8284 4 16V11Z" stroke="#1C274C" stroke-width="2"/>
@@ -155,7 +155,7 @@
           <path d="M8.42209 4.62396L7.78433 9.97123" stroke="#1C274C" stroke-width="2" stroke-linecap="round"/>
           <path d="M14 16.5C14 16.0778 13.6028 15.793 12.8084 15.2235C12.0031 14.6462 11.6005 14.3575 11.3002 14.5695C11 14.7814 11 15.3543 11 16.5C11 17.6457 11 18.2186 11.3002 18.4305C11.6005 18.6425 12.0031 18.3538 12.8084 17.7765C13.6028 17.207 14 16.9222 14 16.5Z" stroke="#1C274C" stroke-width="1.5" stroke-linecap="round"/>
         </svg>
-      </div>
+      </button>
     </div>
   </div>
 
@@ -170,272 +170,7 @@
   </div>
 </div>
 
-<script src="/static/js/pako/pako.min.js"></script>
-<script type="module">
-  import { DotLottie } from '/static/js/lottie-player/dotlottie-web.mjs';
-  import { FFmpeg } from '/static/js/ffmpeg/main/esm/index.js';
-  import { fetchFile, toBlobURL } from "/static/js/ffmpeg/util/esm/index.js";
-
-  const baseURL = '/static/js/ffmpeg/core/esm'
-
-  const logs = document.getElementById('logs');
-
-  function logger(text) {
-    let divLog = document.createElement('div');
-    divLog.innerText = text;
-    divLog.classList.add('log');
-
-    logs.appendChild(divLog);
-    logs.scrollTop = logs.scrollHeight;
-  }
-
-  async function loadFFMpeg() {
-    let ffmpeg = new FFmpeg({log: true});
-
-    ffmpeg.on('log', ({ message }) => {
-      logger(message);
-    });
-
-    await ffmpeg.load({
-      coreURL: await toBlobURL(`${baseURL}/ffmpeg-core.js`, 'text/javascript'),
-      wasmURL: await toBlobURL(`${baseURL}/ffmpeg-core.wasm`, 'application/wasm'),
-      // workerURL: await toBlobURL(`${baseURL}/ffmpeg-core.worker.js`, 'text/javascript')
-    });
-
-    logger('FFmpeg loaded successfully!');
-
-    return ffmpeg;
-  }
-
-  async function unloadFFMpeg() {
-    logger('FFmpeg unloaded successfully!');
-    await ffmpeg.terminate();
-    ffmpeg = null;
-  }
-
-  let ffmpeg = await loadFFMpeg();
-
-  function newIcon({src, data, color, width, height}={}) {
-    const img = new Image();
-    const iconCanvas = document.createElement('canvas');
-    const iconCtx = iconCanvas.getContext('2d');
-
-    iconCanvas.width = width || 100;
-    iconCanvas.height = height || 100;
-
-    if (src) {
-      img.src = src;
-    } else if (data) {
-      logger('TODO')  // TODO
-    } else {
-      console.error('required parameter is missing - src or data')
-    }
-
-    img.onload = () => {
-      iconCtx.drawImage(img, 0, 0, iconCanvas.width, iconCanvas.height)
-
-      if (color) {
-        iconCtx.globalCompositeOperation = 'source-in';
-
-        iconCtx.fillStyle = color;
-        iconCtx.fillRect(0, 0, iconCanvas.width, iconCanvas.height);
-
-        iconCtx.globalCompositeOperation = 'source-over';
-      }
-    }
-
-    return iconCanvas
-  }
-
-  const icon = newIcon(
-    {
-      src: '/static/icons/templates/smile.svg',
-      color: "#ffaf4d",
-      width: 80,
-      height: 80
-    }
-  );
-
-  function drawGradientCircle(x, y, r, g, b, a, innerRadius, outerRadius) {
-      const gradient = ctx.createRadialGradient(x, y, innerRadius, x, y, outerRadius);
-
-      gradient.addColorStop(0, `rgba(${r}, ${g}, ${b}, ${a}`);
-      gradient.addColorStop(1, `rgba(${r}, ${g}, ${b}, 0`);
-
-      ctx.fillStyle = gradient;
-      ctx.beginPath();
-      ctx.arc(x, y, outerRadius, 0, Math.PI * 2);
-      ctx.fill();
-  }
-
-  function drawBackground() {
-    drawGradientCircle(canvas.width * 0.5, canvas.height * 0.7, 228, 194, 255, 0.7, 100, canvas.width);
-    drawGradientCircle(canvas.width * 0.8, canvas.height * 0.2, 233, 190, 255, 0.9, 100, canvas.width);
-
-    drawGradientCircle(canvas.width * 0.2, canvas.height * 0.3, 255, 248, 172, 0.8, 100, canvas.width * 0.85);
-    drawGradientCircle(canvas.width * 0.65, canvas.height * 0.8, 255, 240, 191, 0.8, 100, canvas.width * 0.8);
-  }
-
-  function drawTextBox(text, yStart) {
-    const xPadding = 60;
-    const yPadding = 30;
-    const borderRadius = 30;
-
-    const textCanvas = document.createElement('canvas');
-    const textCtx = textCanvas.getContext('2d');
-    textCtx.font = '500 56px Rubik';  // кринж Web API
-
-    const textMetrics = textCtx.measureText(text);
-    const textHeight = textMetrics.actualBoundingBoxAscent + textMetrics.actualBoundingBoxDescent;
-
-    textCanvas.width = textMetrics.width + 10 + icon.width;
-    textCanvas.height = Math.max(textHeight, icon.height);
-    textCtx.font = '500 56px Rubik';  // кринж Web API
-    textCtx.fillStyle = '#ffaf4d';
-    textCtx.textBaseline = 'top';
-
-    textCtx.fillText(text, 0, (textCanvas.height - textHeight) / 2);
-    textCtx.drawImage(icon, textMetrics.width + 10, (textCanvas.height - icon.height) / 2, icon.width, icon.height);
-
-    const leftPadding = (1080 - (textCanvas.width + xPadding * 2)) / 2;
-
-    ctx.fillStyle = 'rgba(255, 242, 180, 0.44)';
-    ctx.strokeStyle = 'rgba(255, 248, 233, 0.75)';
-    ctx.lineWidth = 10;
-
-    ctx.beginPath();
-    ctx.roundRect(
-      leftPadding,
-      yStart + 64,
-      textCanvas.width + xPadding * 2,
-      textCanvas.height + yPadding * 2,
-      [borderRadius, borderRadius, borderRadius, borderRadius]
-    );
-    ctx.fill();
-    ctx.stroke();
-
-    ctx.drawImage(textCanvas, leftPadding + xPadding, yStart + 64 + yPadding, textCanvas.width, icon.height);
-  }
-
-  async function unpackTgs(url) {
-    try {
-      const response = await fetch(url);
-      const arrayBuffer = await response.arrayBuffer();
-
-      const decompressed = pako.ungzip(new Uint8Array(arrayBuffer));
-
-      return JSON.parse(new TextDecoder().decode(decompressed));
-    } catch (error) {
-      console.error("Ошибка при распаковке .tgs:", error);
-    }
-  }
-
-  function downloadBlob(blob, file_name) {
-    let link = document.createElement("a");
-    link.href = URL.createObjectURL(new Blob([blob.buffer], {type: 'video/mp4'}));
-    link.download = file_name;
-    link.target = '_blank'
-    document.body.appendChild(link);
-    link.click();
-  }
-
-  const sticker = await unpackTgs('/static/media/create.tgs');
-
-  const playButton = document.getElementById('play');
-  const stopButton = document.getElementById('stop');
-  const renderButton = document.getElementById('render');
-  const canvas = document.getElementById('mainCanvas');
-
-  const ctx = canvas.getContext('2d');
-  ctx.fillStyle = '#f2dfff';
-
-  const lottieCanvas = document.createElement('canvas');
-  lottieCanvas.width = 650;
-  lottieCanvas.height = 650;
-
-  let dotLottie = new DotLottie({
-    autoplay: false,
-    loop: false,
-    canvas: lottieCanvas,
-    data: sticker
-  });
-
-  playButton.addEventListener('click', () => {
-    logger('Play animation');
-
-    playButton.classList.add('d-none');
-    stopButton.classList.remove('d-none');
-
-    dotLottie.play();
-    dotLottie.setLoop(true);
-  });
-
-  stopButton.addEventListener('click', () => {
-    logger('Stop animation');
-
-    stopButton.classList.add('d-none');
-    playButton.classList.remove('d-none');
-
-    dotLottie.pause();
-    dotLottie.setLoop(false);
-  });
-
-  renderButton.addEventListener('click', async () => {
-    logger('Starting render');
-
-    if (!ffmpeg) {
-      ffmpeg = await loadFFMpeg();
-    }
-
-    for (let i = 0; i <= (sticker.op - sticker.ip + 1); i++) {
-      dotLottie.setFrame(i);
-
-      const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
-      const fileName = `img${String(i + 1).padStart(3, '0')}.png`;
-
-      await ffmpeg.writeFile(fileName, await fetchFile(blob));
-      logger(`File: ${fileName} written to file system`);
-    }
-
-    logger('Encoding your video');
-    await ffmpeg.exec(
-      [
-        '-framerate', '60',
-        '-i', 'img%03d.png',
-        '-c:v', 'libx264',
-        '-pix_fmt', 'yuv420p',
-        '-crf', '24',
-        '-preset', 'medium',
-        '-bufsize', '3M',
-        '-maxrate', '5M',
-        '-movflags', '+faststart',
-        '-f', 'mp4',
-        'output.mp4'
-      ]
-    );
-
-    logger('The video is ready, the download will start soon');
-    const data = await ffmpeg.readFile('output.mp4');
-    downloadBlob(data, 'zalupa.mp4');
-
-    logger('Rendered video successfully!');
-    await unloadFFMpeg();
-  });
-
-  function renderFrame() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    drawBackground();
-
-    ctx.drawImage(lottieCanvas, 215, 553, lottieCanvas.width, lottieCanvas.height);
-
-    drawTextBox('Your video is processing', 553 + lottieCanvas.height);
-
-    requestAnimationFrame(renderFrame);
-  }
-
-  dotLottie.addEventListener('load', renderFrame);
-</script>
+<script type="module" src="/static/js/giforob/giforob.js"></script>
 
 </body>
 </html>
