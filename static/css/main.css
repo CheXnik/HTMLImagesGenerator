@@ -9,8 +9,22 @@
     font-weight: bold;
     font-style: normal;
     font-size: 16px;
+    color: #292929;
 
     box-sizing: border-box;
+}
+
+::-webkit-scrollbar {
+  width: .5rem;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 1rem;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(198, 198, 198, 0.5);
+  border-radius: 1rem;
 }
 
 hr {
@@ -31,12 +45,26 @@ input {
     text-decoration: none;
     background-color: transparent;
     border: none;
+    min-width: 0;
 }
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
+}
+
+.disabled {
+    cursor: not-allowed;
+}
+
+input:disabled {
+    cursor: not-allowed;
+}
+
+.disabled:hover {
+    border: 2px solid #ffce97 !important;
+    background-color: #ffddb4 !important;
 }
 
 input[type=number] {
@@ -48,25 +76,35 @@ input[type=color] {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    height: 2.21rem;
-    width: 2.47rem;
     background-color: transparent;
     border: none;
     cursor: pointer;
     margin-right: .5rem;
-    -webkit-box-shadow: 0 0 0 3px rgba(0,0,0,0.75);
-    -moz-box-shadow: 0 0 0 3px rgba(0,0,0,0.75);
-    box-shadow: 0 0 0 3px rgba(0,0,0,0.75);
-    border-radius: .5rem;
+    -webkit-box-shadow: 0 0 0 .2rem rgba(0,0,0,0.75);
+    -moz-box-shadow: 0 0 0 .2rem rgba(0,0,0,0.75);
+    box-shadow: 0 0 0 .2rem rgba(0,0,0,0.75);
+    border-radius: .7rem;
 
 }
+
+input[type=color]::-webkit-color-swatch-wrapper {
+    padding: .2rem;
+}
+
 input[type=color]::-webkit-color-swatch {
     border-radius: .5rem;
+    width: 1.7rem;
+    height: 1.7rem;
     border: none;
 }
+
 input[type=color]::-moz-color-swatch {
     border-radius: .5rem;
     border: none;
+}
+
+input[type=file]::file-selector-button {
+    display: none;
 }
 
 .slider {
@@ -99,8 +137,12 @@ input[type=color]::-moz-color-swatch {
     cursor: pointer;
 }
 
-.fix {
+.width-100 {
     width: 100%;
+}
+
+.width-70 {
+    width: 70%;
 }
 
 .app {
@@ -122,6 +164,10 @@ input[type=color]::-moz-color-swatch {
     border-right: 2px solid #ffca8c;
     overflow-y: auto;
     height: 100%;
+}
+
+.settings::-webkit-scrollbar {
+    width: 0;
 }
 
 .menu {
@@ -146,6 +192,7 @@ input[type=color]::-moz-color-swatch {
 .input-wrapper {
     margin-top: 1rem;
     display: flex;
+    flex-direction: column;
 }
 
 .form {
@@ -158,11 +205,8 @@ input[type=color]::-moz-color-swatch {
     position: relative;
     display: flex;
     gap: .2rem;
+    align-items: center;
     transition: background-color, border ease .3s;
-}
-
-.form input {
-    min-width: 0;
 }
 
 .form:hover {
@@ -269,7 +313,7 @@ input[type=color]::-moz-color-swatch {
     stroke: #ffac4c;
 }
 
-.button .icon {
+.icon {
     width: 1.5rem;
     height: 1.5rem;
 }

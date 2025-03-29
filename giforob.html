@@ -9,22 +9,21 @@
 <body>
 
 <div class="app">
-
   <div class="settings-wrapper">
     <div class="settings">
       <div class="menu">
         <div class="title">Canvas</div>
         <div class="input-wrapper">
           <div class="form-wrapper ai-center">
-            <div class="form">
+            <div class="form disabled">
               <span class="input-decoration">w</span>
-              <input type="number" id="canvas-width" class="fix" value="2700" placeholder="2700" onchange="apply_new_params()" title="">
+              <input type="number" id="canvas-width" value="1080" class="width-100" placeholder="Width" title="" disabled>
               <span class="input-decoration">px</span>
             </div>
             <span>x</span>
-            <div class="form">
+            <div class="form disabled">
               <span class="input-decoration">h</span>
-              <input type="number" id="canvas-height" class="fix" value="1200" placeholder="1200" onchange="apply_new_params()" title="">
+              <input type="number" id="canvas-height" value="1920" class="width-100" placeholder="Height" title="" disabled>
               <span class="input-decoration">px</span>
             </div>
           </div>
@@ -32,104 +31,177 @@
       </div>
 
       <div class="menu">
-        <div class="title">Text</div>
+        <div class="title">Caption</div>
         <div class="form-wrapper fd-column">
-          <div class="input-wrapper fd-column">
-            <label for="text-on-image">Text on image</label>
+          <div class="input-wrapper">
+            <label for="text">Text</label>
             <div class="form">
-              <input id="text-on-image" value="Template text" placeholder="Text on image" oninput="apply_new_params()">
+              <input id="text" value="Your video is processing" placeholder="Text">
             </div>
           </div>
-          <div class="input-wrapper fd-column">
-            <label for="size-text">Size</label>
+          <div class="input-wrapper">
+            <label for="padding-x">Padding</label>
+            <div class="form-wrapper ai-center">
+              <div class="form">
+                <span class="input-decoration">x</span>
+                <input type="number" id="padding-x" value="60" class="width-100" placeholder="60" title="">
+                <span class="input-decoration">px</span>
+              </div>
+              <div class="form">
+                <span class="input-decoration">y</span>
+                <input type="number" id="padding-y" value="30" class="width-100" placeholder="30" title="">
+                <span class="input-decoration">px</span>
+              </div>
+            </div>
+          </div>
+          <div class="input-wrapper">
+            <label for="color-text">Color</label>
+            <div class="color-wrapper">
+              <input type="color" id="color-text" value="#ffaf4d" title="">
+              <div class="form">
+                <span class="input-decoration">#</span>
+                <input type="text" id="hex-color-text" value="ffaf4d" title="" class="width-100" placeholder="ffffff">
+              </div>
+            </div>
+          </div>
+          <div class="input-wrapper">
+            <label for="background-color-text">Background color</label>
+            <div class="color-wrapper">
+              <input type="color" id="background-color-text" value="#ffe4bb" title="">
+              <div class="form">
+                <span class="input-decoration">#</span>
+                <input type="text" id="hex-background-color-text" value="ffe4bb" title="" class="width-100" placeholder="ffffff">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu">
+        <div class="title">Border</div>
+        <div class="input-wrapper">
+          <label for="border-color">Color</label>
+          <div class="color-wrapper">
+            <input type="color" id="border-color" value="#fff5de" title="">
             <div class="form">
-              <input type="number" id="size-text" value="220" placeholder="Size" onchange="apply_new_params()">
+              <span class="input-decoration">#</span>
+              <input type="text" id="hex-border-color" value="fff5de" title="" class="width-100" placeholder="ffffff">
+            </div>
+          </div>
+        </div>
+        <div class="input-wrapper">
+          <label for="border-radius">Radius</label>
+          <div class="form-wrapper ai-center">
+            <div class="form">
+              <input type="number" id="border-radius" value="30" class="width-100" placeholder="30" title="">
               <span class="input-decoration">px</span>
             </div>
           </div>
-          <div class="input-wrapper fd-column">
-            <label for="padding-text">Padding</label>
+        </div>
+        <div class="input-wrapper">
+          <label for="border-width">Width</label>
+          <div class="form-wrapper ai-center">
             <div class="form">
-              <input type="number" id="padding-text" value="150" placeholder="Padding" onchange="apply_new_params()">
+              <input type="number" id="border-width" value="10" class="width-100" placeholder="10" title="">
               <span class="input-decoration">px</span>
             </div>
           </div>
-          <div class="input-wrapper fd-column">
-            <label for="padding-text">Color</label>
-            <div class="color-wrapper">
-              <input type="color" id="color-text" value="#ffffff" title="" oninput="change_color(this)">
-              <div class="form">
-                <span class="input-decoration">#</span>
-              <input type="text" id="hex-color-text" value="ffffff" title="" class="fix" placeholder="ffffff" onchange="change_hex_color(this)">
-              </div>
+        </div>
+      </div>
+
+      <div class="menu">
+        <div class="title">Background / opacity</div>
+        <div class="input-wrapper">
+          <label for="background-color1">Color #1</label>
+          <div class="color-wrapper">
+            <input type="color" id="background-color1" value="#e4c2ff" title="">
+            <div class="form">
+              <span class="input-decoration">#</span>
+              <input type="text" id="hex-background-color1" value="e4c2ff" title="" class="width-100" placeholder="ffffff">
+            </div>
+            <span>&nbsp;/&nbsp;</span>
+            <div class="form width-70">
+              <input type="text" id="opacity-color1" class="width-100" value="70" placeholder="100" title="">
+              <span class="input-decoration">%</span>
+            </div>
+          </div>
+        </div>
+        <div class="input-wrapper">
+          <label for="background-color1">Color #2</label>
+          <div class="color-wrapper">
+            <input type="color" id="background-color2" value="#e9beff" title="">
+            <div class="form">
+              <span class="input-decoration">#</span>
+              <input type="text" id="hex-background-color2" value="e9beff" title="" class="width-100" placeholder="ffffff">
+            </div>
+            <span>&nbsp;/&nbsp;</span>
+            <div class="form width-70">
+              <input type="text" id="opacity-color2" class="width-100" value="90" placeholder="100" title="">
+              <span class="input-decoration">%</span>
+            </div>
+          </div>
+        </div>
+        <div class="input-wrapper">
+          <label for="background-color1">Color #3</label>
+          <div class="color-wrapper">
+            <input type="color" id="background-color3" value="#fff8ac" title="">
+            <div class="form">
+              <span class="input-decoration">#</span>
+              <input type="text" id="hex-background-color3" value="fff8ac" title="" class="width-100" placeholder="ffffff">
+            </div>
+            <span>&nbsp;/&nbsp;</span>
+            <div class="form width-70">
+              <input type="text" id="opacity-color3" class="width-100" value="80" placeholder="100" title="">
+              <span class="input-decoration">%</span>
+            </div>
+          </div>
+        </div>
+        <div class="input-wrapper">
+          <label for="background-color1">Color #4</label>
+          <div class="color-wrapper">
+            <input type="color" id="background-color4" value="#fff0bf" title="">
+            <div class="form">
+              <span class="input-decoration">#</span>
+              <input type="text" id="hex-background-color4" value="fff0bf" title="" class="width-100" placeholder="ffffff">
+            </div>
+            <span>&nbsp;/&nbsp;</span>
+            <div class="form width-70">
+              <input type="text" id="opacity-color4" class="width-100" value="80" placeholder="100" title="">
+              <span class="input-decoration">%</span>
             </div>
           </div>
         </div>
       </div>
 
       <div class="menu">
-        <div class="title">Left gradient</div>
-        <div class="input-wrapper fd-column">
-            <label for="padding-text">From</label>
-            <div class="color-wrapper">
-              <input type="color" id="lg-color-from" value="#4e4e4e" title="" oninput="change_color(this)">
-              <div class="form">
-                <span class="input-decoration">#</span>
-              <input type="text" id="hex-lg-color-from" value="4e4e4e" title="" class="fix" placeholder="4e4e4e" onchange="change_hex_color(this)">
-              </div>
+        <div class="title">Files</div>
+        <div class="input-wrapper">
+          <label for="sticker">Sticker</label>
+          <div class="form-wrapper ai-center">
+            <div class="form">
+              <svg width="800px" class="icon" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M3 15C3 17.8284 3 19.2426 3.87868 20.1213C4.75736 21 6.17157 21 9 21H15C17.8284 21 19.2426 21 20.1213 20.1213C21 19.2426 21 17.8284 21 15" stroke="#1C274C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M12 16V3M12 3L16 7.375M12 3L8 7.375" stroke="#1C274C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <input type="file" id="sticker" value="10" class="width-100" placeholder="10" title="">
             </div>
-          </div>
-        <div class="input-wrapper fd-column">
-            <label for="padding-text">To</label>
-            <div class="color-wrapper">
-              <input type="color" id="lg-color-to" value="#1f1f1f" title="" oninput="change_color(this)">
-              <div class="form">
-                <span class="input-decoration">#</span>
-              <input type="text" id="hex-lg-color-to" value="1f1f1f" title="" class="fix" placeholder="1f1f1f" onchange="change_hex_color(this)">
-              </div>
-            </div>
-          </div>
-      </div>
-
-      <div class="menu">
-        <div class="title">Right gradient</div>
-        <div class="input-wrapper fd-column">
-            <label for="padding-text">From</label>
-            <div class="color-wrapper">
-              <input type="color" id="rg-color-from" value="#fd30d1" title="" oninput="change_color(this)">
-              <div class="form">
-                <span class="input-decoration">#</span>
-              <input type="text" id="hex-rg-color-from" value="fd30d1" title="" class="fix" placeholder="fd30d1" onchange="change_hex_color(this)">
-              </div>
-            </div>
-          </div>
-        <div class="input-wrapper fd-column">
-            <label for="padding-text">To</label>
-            <div class="color-wrapper">
-              <input type="color" id="rg-color-to" value="#b505f5" title="" oninput="change_color(this)">
-              <div class="form">
-                <span class="input-decoration">#</span>
-              <input type="text" id="hex-rg-color-to" value="b505f5" title="" class="fix" placeholder="b505f5" onchange="change_hex_color(this)">
-              </div>
-            </div>
-          </div>
-      </div>
-
-      <div class="menu">
-        <div class="title">Gradient ratio</div>
-        <div class="input-wrapper fd-column">
-          <div class="form">
-            <span class="input-decoration">w</span>
-            <input type="number" title="" class="fix" id="numeric-gradient-ratio" value="2000" placeholder="" onchange="change_gradient_ratio(this)">
-            <span class="input-decoration">px</span>
           </div>
         </div>
-        <div class="input-wrapper fd-column">
-          <input class="slider" id="gradient-ratio" type="range" value="2000" min="0" max="2700" title="" oninput="apply_new_params()">
+        <div class="input-wrapper">
+          <label for="icon">Icon</label>
+          <div class="form-wrapper ai-center">
+            <div class="form">
+              <svg width="800px" class="icon" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M3 15C3 17.8284 3 19.2426 3.87868 20.1213C4.75736 21 6.17157 21 9 21H15C17.8284 21 19.2426 21 20.1213 20.1213C21 19.2426 21 17.8284 21 15" stroke="#1C274C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M12 16V3M12 3L16 7.375M12 3L8 7.375" stroke="#1C274C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <input type="file" id="icon" value="10" class="width-100" placeholder="10" title="">
+            </div>
+          </div>
         </div>
       </div>
-
     </div>
+
     <div class="tools">
       <button id="play" class="button">
         <span>Play</span>

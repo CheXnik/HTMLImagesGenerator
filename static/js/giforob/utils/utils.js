@@ -1,11 +1,8 @@
 import { ungzip } from "/static/js/pako/pako.min.mjs";
 
 
-async function unpackTgs(url) {
+async function unpackTgs(arrayBuffer) {
   try {
-    const response = await fetch(url);
-    const arrayBuffer = await response.arrayBuffer();
-
     const decompressed = ungzip(new Uint8Array(arrayBuffer));
 
     return JSON.parse(new TextDecoder().decode(decompressed));
@@ -23,4 +20,13 @@ function downloadBlob(blob, file_name) {
   link.click();
 }
 
-export {unpackTgs, downloadBlob};
+function hexToRGB(hexColor){
+  const colorNum = parseInt(hexColor, 16);
+  return {
+    red: (colorNum >> 16) & 0xFF,
+    green: (colorNum >> 8) & 0xFF,
+    blue: colorNum & 0xFF,
+  }
+}
+
+export {unpackTgs, downloadBlob, hexToRGB};

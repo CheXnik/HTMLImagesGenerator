@@ -44,19 +44,17 @@ function drawGradientCircle(ctx, x, y, r, g, b, a, innerRadius, outerRadius) {
     ctx.fill();
 }
 
-function drawBackground(ctx, canvas) {
-  drawGradientCircle(ctx,canvas.width * 0.5, canvas.height * 0.7, 228, 194, 255, 0.7, 100, canvas.width);
-  drawGradientCircle(ctx, canvas.width * 0.8, canvas.height * 0.2, 233, 190, 255, 0.9, 100, canvas.width);
+function drawBackground({ctx, canvas, color1, opacity1, color2, opacity2, color3, opacity3, color4, opacity4}) {
+  drawGradientCircle(ctx,canvas.width * 0.5, canvas.height * 0.7, color1.red, color1.green, color1.blue, opacity1, 100, canvas.width);
+  drawGradientCircle(ctx, canvas.width * 0.8, canvas.height * 0.2, color2.red, color2.green, color2.blue, opacity2, 100, canvas.width);
 
-  drawGradientCircle(ctx,canvas.width * 0.2, canvas.height * 0.3, 255, 248, 172, 0.8, 100, canvas.width * 0.85);
-  drawGradientCircle(ctx,canvas.width * 0.65, canvas.height * 0.8, 255, 240, 191, 0.8, 100, canvas.width * 0.8);
+  drawGradientCircle(ctx,canvas.width * 0.2, canvas.height * 0.3, color3.red, color3.green, color3.blue, opacity3, 100, canvas.width * 0.85);
+  drawGradientCircle(ctx,canvas.width * 0.65, canvas.height * 0.8, color4.red, color4.green, color4.blue, opacity4, 100, canvas.width * 0.8);
 }
 
-function drawTextBox(ctx, text, icon, yStart) {
-  const xPadding = 60;
-  const yPadding = 30;
-  const borderRadius = 30;
-
+function drawTextBox(
+  ctx, text, icon, yStart, paddingX, paddingY, textColor, backgroundColor, borderColor, borderRadius, borderWidth
+) {
   const textCanvas = document.createElement("canvas");
   const textCtx = textCanvas.getContext("2d");
   textCtx.font = "500 56px Rubik";  // кринж Web API
@@ -67,30 +65,35 @@ function drawTextBox(ctx, text, icon, yStart) {
   textCanvas.width = textMetrics.width + 10 + icon.width;
   textCanvas.height = Math.max(textHeight, icon.height);
   textCtx.font = "500 56px Rubik";  // кринж Web API
-  textCtx.fillStyle = "#ffaf4d";
+  textCtx.fillStyle = textColor;
   textCtx.textBaseline = "top";
 
-  textCtx.fillText(text, 0, (textCanvas.height - textHeight) / 2);
   textCtx.drawImage(icon, textMetrics.width + 10, (textCanvas.height - icon.height) / 2, icon.width, icon.height);
+  textCtx.globalCompositeOperation = 'source-in';
+  textCtx.fillStyle = textColor;
+  textCtx.fillRect(textMetrics.width + 10, (textCanvas.height - icon.height) / 2, icon.width, icon.height);
+  textCtx.globalCompositeOperation = 'source-over';
 
-  const leftPadding = (1080 - (textCanvas.width + xPadding * 2)) / 2;
+  textCtx.fillText(text, 0, (textCanvas.height - textHeight) / 2);
 
-  ctx.fillStyle = "rgba(255, 242, 180, 0.44)";
-  ctx.strokeStyle = "rgba(255, 248, 233, 0.75)";
-  ctx.lineWidth = 10;
+  const leftPadding = (1080 - (textCanvas.width + paddingX * 2)) / 2;
+
+  ctx.fillStyle = backgroundColor;
+  ctx.strokeStyle = borderColor;
+  ctx.lineWidth = borderWidth;
 
   ctx.beginPath();
   ctx.roundRect(
     leftPadding,
     yStart + 64,
-    textCanvas.width + xPadding * 2,
-    textCanvas.height + yPadding * 2,
+    textCanvas.width + paddingX * 2,
+    textCanvas.height + paddingY * 2,
     [borderRadius, borderRadius, borderRadius, borderRadius]
   );
   ctx.fill();
   ctx.stroke();
 
-  ctx.drawImage(textCanvas, leftPadding + xPadding, yStart + 64 + yPadding, textCanvas.width, icon.height);
+  ctx.drawImage(textCanvas, leftPadding + paddingX, yStart + 64 + paddingY, textCanvas.width, textCanvas.height);
 }
 
 export {newIcon, drawBackground, drawTextBox}
