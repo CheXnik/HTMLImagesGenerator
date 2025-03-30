@@ -182,7 +182,7 @@ async function uploadSticker() {
 
   reader.onload = async function(event) {
     sticker = await unpackTgs(event.target.result);
-    console.log(sticker)
+
     dotLottie.load({data: sticker});
   };
 
