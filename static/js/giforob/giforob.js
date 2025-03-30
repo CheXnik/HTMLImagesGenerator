@@ -113,8 +113,7 @@ renderButton.addEventListener('click', async () => {
     ffmpeg = await loadFFMpeg();
   }
 
-  // for (let i = 0; i <= (sticker.op - sticker.ip + 1); i++) {
-  for (let i = 0; i <= 10; i++) {
+  for (let i = 0; i <= (sticker.op - sticker.ip + 1); i++) {
     dotLottie.setFrame(i);
 
     const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
@@ -183,7 +182,7 @@ async function uploadSticker() {
 
   reader.onload = async function(event) {
     sticker = await unpackTgs(event.target.result);
-
+    console.log(sticker)
     dotLottie.load({data: sticker});
   };
 
