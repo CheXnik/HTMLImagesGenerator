@@ -5,11 +5,8 @@ import { newIcon, drawTextBox, drawBackground } from '/static/js/giforob/drawing
 import {unpackTgs, downloadBlob, hexToRGB} from '/static/js/giforob/utils/utils.js';
 import { loadFFMpeg, unloadFFMpeg } from '/static/js/giforob/utils/ffmpeg.js';
 
+logger('Loading FFMpeg, please wait...');
 let ffmpeg = await loadFFMpeg();
-
-const playButton = document.getElementById('play');
-const stopButton = document.getElementById('stop');
-const renderButton = document.getElementById('render');
 
 const canvas = document.getElementById('mainCanvas');
 const ctx = canvas.getContext('2d');
@@ -23,6 +20,10 @@ const arrayBuffer = await response.arrayBuffer();
 let sticker = await unpackTgs(arrayBuffer);
 
 let dotLottie = new DotLottie({autoplay: false, loop: false, canvas: lottieCanvas, data: sticker});
+
+const playButton = document.getElementById('play');
+const stopButton = document.getElementById('stop');
+const renderButton = document.getElementById('render');
 
 let text = document.getElementById('text').value;
 let paddingX = parseInt(document.getElementById('padding-x').value);
@@ -51,6 +52,8 @@ playButton.addEventListener('click', () => {
   playButton.classList.add('d-none');
   stopButton.classList.remove('d-none');
 
+  renderButton.disabled = true;
+
   dotLottie.play();
   dotLottie.setLoop(true);
 });
@@ -61,18 +64,24 @@ stopButton.addEventListener('click', () => {
   stopButton.classList.add('d-none');
   playButton.classList.remove('d-none');
 
-  dotLottie.pause();
+  renderButton.disabled = false;
+
+  dotLottie.stop();
   dotLottie.setLoop(false);
 });
 
 renderButton.addEventListener('click', async () => {
+  playButton.disabled = true;
+  renderButton.disabled = true;
+
   logger('Starting render');
 
   if (!ffmpeg) {
     ffmpeg = await loadFFMpeg();
   }
 
-  for (let i = 0; i <= (sticker.op - sticker.ip + 1); i++) {
+  // for (let i = 0; i <= (sticker.op - sticker.ip + 1); i++) {
+  for (let i = 0; i <= 10; i++) {
     dotLottie.setFrame(i);
 
     const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
@@ -101,10 +110,13 @@ renderButton.addEventListener('click', async () => {
 
   logger('The video is ready, the download will start soon');
   const data = await ffmpeg.readFile('output.mp4');
-  downloadBlob(data, `${text.toLowerCase().replace(' ', '-')}.mp4`);
+  downloadBlob(data, `${text.toLowerCase().replaceAll(' ', '-')}.mp4`);
 
   logger('Rendered video successfully!');
-  await unloadFFMpeg();
+  await unloadFFMpeg(ffmpeg);
+
+  playButton.disabled = false;
+  renderButton.disabled = false;
 });
 
 function renderFrame() {
