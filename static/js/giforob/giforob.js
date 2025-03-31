@@ -289,4 +289,13 @@ document.getElementById('opacity-color2').addEventListener('change', applySettin
 document.getElementById('opacity-color3').addEventListener('change', applySettings);
 document.getElementById('opacity-color4').addEventListener('change', applySettings);
 
+Array.from(document.getElementsByClassName('form')).forEach(function(elem) {
+  elem.addEventListener('click', function() {
+    const input = elem.getElementsByTagName('input')[0];
+    if (input.type === 'file') {
+      input.click();
+    }
+  });
+});
+
 dotLottie.addEventListener('load', renderFrame);
