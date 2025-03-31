@@ -22,10 +22,4 @@ async function loadFFMpeg() {
   return ffmpeg;
 }
 
-async function unloadFFMpeg(ffmpeg) {
-  logger("FFmpeg unloaded successfully!");
-  await ffmpeg.terminate();
-  ffmpeg = null;
-}
-
-export {loadFFMpeg, unloadFFMpeg};
+export {loadFFMpeg};
