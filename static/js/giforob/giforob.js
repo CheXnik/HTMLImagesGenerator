@@ -36,7 +36,7 @@ import { fetchFile } from '/static/js/ffmpeg/util/esm/index.js';
 import { logger } from '/static/js/giforob/utils/logger.js'
 import { newIcon, drawTextBox, drawBackground } from '/static/js/giforob/drawing/drawing.js';
 import {unpackTgs, downloadBlob, hexToRGB} from '/static/js/giforob/utils/utils.js';
-import { loadFFMpeg, unloadFFMpeg } from '/static/js/giforob/utils/ffmpeg.js';
+import { loadFFMpeg } from '/static/js/giforob/utils/ffmpeg.js';
 
 logger('Loading FFMpeg, please wait...');
 let ffmpeg = await loadFFMpeg();
@@ -109,9 +109,7 @@ renderButton.addEventListener('click', async () => {
 
   logger('Starting render');
 
-  if (!ffmpeg) {
-    ffmpeg = await loadFFMpeg();
-  }
+  await ffmpeg.createDir('/temp')
 
   for (let i = 0; i <= (sticker.op - sticker.ip + 1); i++) {
     dotLottie.setFrame(i);
@@ -119,15 +117,16 @@ renderButton.addEventListener('click', async () => {
     const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
     const fileName = `img${String(i + 1).padStart(3, '0')}.png`;
 
-    await ffmpeg.writeFile(fileName, await fetchFile(blob));
+    await ffmpeg.writeFile(`/temp/${fileName}`, await fetchFile(blob));
     logger(`File: ${fileName} written to file system`);
   }
 
   logger('Encoding your video');
+
   await ffmpeg.exec(
     [
       '-framerate', '60',
-      '-i', 'img%03d.png',
+      '-i', '/temp/img%03d.png',
       '-c:v', 'libx264',
       '-pix_fmt', 'yuv420p',
       '-crf', '24',
@@ -145,7 +144,18 @@ renderButton.addEventListener('click', async () => {
   downloadBlob(data, `${text.toLowerCase().replaceAll(' ', '-')}.mp4`);
 
   logger('Rendered video successfully!');
-  await unloadFFMpeg(ffmpeg);
+
+  let items = await ffmpeg.listDir('/temp')
+  for (let item of items) {
+      if (!item.isDir) {
+          await ffmpeg.deleteFile(`/temp/${item.name}`);
+      }
+  }
+  logger('Deleting cache...')
+
+  await ffmpeg.deleteDir('/temp')
+
+  logger('Cleared out cache successfully!');
 
   playButton.disabled = false;
   renderButton.disabled = false;
