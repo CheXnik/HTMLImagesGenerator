@@ -44,12 +44,17 @@ function drawGradientCircle(ctx, x, y, r, g, b, a, innerRadius, outerRadius) {
     ctx.fill();
 }
 
-function drawBackground({ctx, canvas, color1, opacity1, color2, opacity2, color3, opacity3, color4, opacity4}) {
-  drawGradientCircle(ctx,canvas.width * 0.5, canvas.height * 0.7, color1.red, color1.green, color1.blue, opacity1, 100, canvas.width);
-  drawGradientCircle(ctx, canvas.width * 0.8, canvas.height * 0.2, color2.red, color2.green, color2.blue, opacity2, 100, canvas.width);
+function drawBackground({ctx, canvas, mainBackgroundColor, color1, opacity1, color2, opacity2, color3, opacity3, color4, opacity4}) {
+  ctx.beginPath();
+  ctx.rect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = mainBackgroundColor;
+  ctx.fill();
+
+  drawGradientCircle(ctx,canvas.width * 0.2, canvas.height * 0.7, color1.red, color1.green, color1.blue, opacity1, 100, canvas.width * 0.8);
+  drawGradientCircle(ctx, canvas.width * 0.8, canvas.height * 0.2, color2.red, color2.green, color2.blue, opacity2, 100, canvas.width * 0.8);
 
   drawGradientCircle(ctx,canvas.width * 0.2, canvas.height * 0.3, color3.red, color3.green, color3.blue, opacity3, 100, canvas.width * 0.85);
-  drawGradientCircle(ctx,canvas.width * 0.65, canvas.height * 0.8, color4.red, color4.green, color4.blue, opacity4, 100, canvas.width * 0.8);
+  drawGradientCircle(ctx,canvas.width * 0.8, canvas.height * 0.8, color4.red, color4.green, color4.blue, opacity4, 100, canvas.width * 0.8);
 }
 
 function drawTextBox(

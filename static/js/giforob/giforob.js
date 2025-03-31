@@ -69,6 +69,7 @@ let borderColor = document.getElementById('hex-border-color').value;
 let borderRadius = document.getElementById('border-radius').value;
 let borderWidth = document.getElementById('border-width').value;
 
+let mainBackgroundColor = document.getElementById('hex-main-background-color').value;
 let backgroundColor1 = hexToRGB(document.getElementById('hex-background-color1').value);
 let backgroundColor2 = hexToRGB(document.getElementById('hex-background-color2').value);
 let backgroundColor3 = hexToRGB(document.getElementById('hex-background-color3').value);
@@ -167,6 +168,7 @@ function renderFrame() {
   drawBackground({
     ctx: ctx,
     canvas: canvas,
+    mainBackgroundColor: `#${mainBackgroundColor}`,
     color1: backgroundColor1,
     opacity1: opacityColor1,
     color2: backgroundColor2,
@@ -231,6 +233,7 @@ function applySettings() {
   borderRadius = parseInt(document.getElementById('border-radius').value);
   borderWidth = parseInt(document.getElementById('border-width').value);
 
+  mainBackgroundColor = document.getElementById('hex-main-background-color').value;
   backgroundColor1 = hexToRGB(document.getElementById('hex-background-color1').value);
   backgroundColor2 = hexToRGB(document.getElementById('hex-background-color2').value);
   backgroundColor3 = hexToRGB(document.getElementById('hex-background-color3').value);
@@ -275,6 +278,8 @@ document.getElementById('hex-border-color').addEventListener('change', async fun
 document.getElementById('border-radius').addEventListener('change', applySettings);
 document.getElementById('border-width').addEventListener('change', applySettings);
 
+document.getElementById('main-background-color').addEventListener('input', async function () {await changeColor(this)});
+document.getElementById('hex-main-background-color').addEventListener('change', async function () {await changeHexColor(this)});
 document.getElementById('background-color1').addEventListener('input', async function () {await changeColor(this)});
 document.getElementById('hex-background-color1').addEventListener('change', async function () {await changeHexColor(this)});
 document.getElementById('background-color2').addEventListener('input', async function () {await changeColor(this)});
